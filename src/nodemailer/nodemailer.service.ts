@@ -9,8 +9,8 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: , // generated ethereal user
-        pass: // generated ethereal password
+        user: process.env.user, // generated ethereal user
+        pass: process.env.secret// generated ethereal password
     },
     tls: {
         rejectUnauthorized: false
@@ -27,7 +27,7 @@ export class NodemailerService {
             
             let info = await transporter.sendMail({
                 from: 'Crypto Farm', // sender address
-                to: ,//receiver email
+                to:"" ,//receiver email
                 subject: 'Invoice of Payment', // Subject line
                 html: '<h1>Welcome</h1><p>That was easy!</p>'
             })

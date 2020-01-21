@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Delete,Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -22,11 +23,10 @@ export class AuthController {
 
 @Post('/signup')
   async signup(
-  @Body('email') email:string,
-  @Body('password') password:string ) {
+  @Req() request:Request ) {
     try{
       // console.log("signup 1")
-      const res= await this.authService.signup(email,password);
+      const res= await this.authService.signup(request.body);
       return {result:res}
     }
     catch(error){

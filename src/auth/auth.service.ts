@@ -41,17 +41,20 @@ export class AuthService {
         }
     }
 
-    async signup(email,pass){
+    async signup(req){
+        // console.log(req,"requesttttt")
         try{
             // console.log("signup 2")
-            const uniqueMail  = await this.authModel.findOne({email:email})
+            const uniqueMail  = await this.authModel.findOne({email:req.email})
             console.log(uniqueMail)
             if(!uniqueMail){
                 // console.log("inside if")
-                const hash = bcrypt.hashSync(pass, 8);
-                const newUser = new this.authModel({email,hash });
-                // delete req.body.password;
-                // console.log(req.body)
+                req.hash = bcrypt.hashSync(req.password, 8);
+                // console.log(req,"reqqq4")
+                delete req.password;
+   
+                // console.log(req,"req222")
+                const newUser = new this.authModel(req);
                 const user = await this.authModel.create(newUser)
                 // const signupDetails = user
                 return user
