@@ -15,7 +15,7 @@ import { AuthModule } from './auth/auth.module';
     StripeModule,
     NodemailerModule,
     AuthModule,
-    MongooseModule.forRoot("your mongodb connection string")],
+    MongooseModule.forRoot('mongodb+srv://hasanrasheed:Pass123456@cluster0-0kmmw.mongodb.net/test?retryWrites=true&w=majority')],
   controllers: [AppController],
   providers: [AppService],
 })
