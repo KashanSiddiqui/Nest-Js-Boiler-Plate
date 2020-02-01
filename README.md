@@ -8,8 +8,6 @@
 [linux-url]: https://travis-ci.org/nestjs/nest
   
   <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
@@ -21,6 +19,8 @@ Node js boiler plate with login and signup routes and payments gateways. Mongoos
   - Send Email Function using nodemailer
   - Stripe Payment Method
   - Paypal Payment Method
+  - Currency conversion (By Rapid Api)
+  - Crypto to fiat conversion (Kraken)
  
  Few keys that needed to be updated. Create config.json and .env file and update things that are mentioned below
 
@@ -30,6 +30,7 @@ Node js boiler plate with login and signup routes and payments gateways. Mongoos
   - Update Stripe secret key  in .env file 
   - Update email and password for sender email
   - Update paypal secrets keys in paypal services file
+  - Update Rapid api and kraken keys in kraken services file 
 
 ## Installation
 
