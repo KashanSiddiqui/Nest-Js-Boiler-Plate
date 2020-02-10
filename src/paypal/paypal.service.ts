@@ -7,8 +7,8 @@ exports.execute = promisify(paypal.payment.execute)
 //paypal configuration
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'AWjkIufsfjuEdWdurfflappsGUVY4xp65yPZ0fOHJJz7sdrpGpBJCtlZ8FByG3C9ERkmUEaMPOCWncEU',
-    'client_secret': 'ECYK8Gh8BIuq7qHGoS44rCDT3If7oRku6jF6FFfTYB0QS-bDJSgkS7B_yt3XITgsnC7OPQmD6zBOzAHL'
+    'client_id': '',
+    'client_secret': ''
 });
 
 @Injectable()
