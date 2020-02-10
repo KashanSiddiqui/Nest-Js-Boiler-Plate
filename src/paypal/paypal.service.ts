@@ -4,22 +4,18 @@ const {promisify} = require('util');
 exports.create = promisify(paypal.payment.create);
 exports.execute = promisify(paypal.payment.execute)
 
-// const Constant= require('../constants')
-// import {InjectModel} from '@nestjs/mongoose'
-// import {Model} from 'mongoose'
-// import { Product } from './product.model'
+//paypal configuration
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': "",
-    'client_secret':"" 
+    'client_id': 'AWjkIufsfjuEdWdurfflappsGUVY4xp65yPZ0fOHJJz7sdrpGpBJCtlZ8FByG3C9ERkmUEaMPOCWncEU',
+    'client_secret': 'ECYK8Gh8BIuq7qHGoS44rCDT3If7oRku6jF6FFfTYB0QS-bDJSgkS7B_yt3XITgsnC7OPQmD6zBOzAHL'
 });
 
 @Injectable()
 export class PaypalService {
-    // products: Product[] = [];
-
     constructor(){}
 
+    //function that returns paypal supported currencies
     getListOfCurrencies = async () => {
         try {
             const CURRENCY_LIST = [
@@ -127,17 +123,17 @@ export class PaypalService {
         }
     }
     
-
+    // http://104.238.152.209:4002
+    //function that create payment and return token to front end
     createPayment = async (obj) => {
         try {
-            console.log(obj,"secondd")
             let create_payment_json = {
                 "intent": "sale",
                 "payer": {
                     "payment_method": "paypal"
                 },
                 "redirect_urls": {
-                    "return_url": "http://localhost:3000",
+                    "return_url": "http://104.238.152.209:4002",
                     "cancel_url": "http://cancel.url"
                 },
                 "transactions": [{
@@ -154,7 +150,7 @@ export class PaypalService {
                         "currency": obj.currency.toUpperCase(),
                         "total": obj.amount
                     },
-                    "description": "your description here"
+                    "description": "All orders contain a 10CAD wallet material charge and 1.30CAD harmonised sales tax, included in your Payment Amount."
                 }]
             };
             return new Promise(async function (resolve, reject) {
@@ -173,6 +169,7 @@ export class PaypalService {
     }
 
 
+    //function that execute payment from token that it receive from front end
     executePayment= async (obj) =>{
         try{
             const execute_payment_obj={

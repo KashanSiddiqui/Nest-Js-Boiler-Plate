@@ -3,10 +3,11 @@ import { Module } from '@nestjs/common';
 
 import { NodemailerController } from './nodemailer.controller';
 import { NodemailerService } from './nodemailer.service';
+import { ConfigModule } from '@nestjs/config';
 // import { ProductSchema } from './product.model';
 
 @Module({
-  imports: [],
+  imports: [ConfigModule],
   controllers: [NodemailerController],
   providers: [NodemailerService],
 })

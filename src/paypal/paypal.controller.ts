@@ -1,67 +1,65 @@
-import { Controller, Post, Body, Param, Get} from '@nestjs/common';
+import { Controller, Post, Body, Param, Get } from '@nestjs/common';
 import { PaypalService } from './paypal.service';
 
 @Controller('paypal')
 export class PaypalController {
-  constructor(private readonly PaypalService: PaypalService) {}
+    constructor(private readonly PaypalService: PaypalService) { }
 
-  @Post('/createPayment')
-  async paypalPayment(@Body() obj:Object) {
-      console.log(obj,"firsssssst")
-    //   console.log(producTitle,productDescription,productPrice,"Firsttt")
-    try{
-        const result:any= await this.PaypalService.createPayment(obj);
-        console.log(result,"thirddd")
-        if (result) {
-            
-            for (let i = 0; i < result.links.length; i++) {
-                if (result.links[i].rel === 'approval_url') {
-                    return {responseCode:200,result:result.links[i].href}
+    //request to create payment token
+    @Post('/createPayment')
+    async paypalPayment(@Body() obj: Object) {
+        try {
+            const result: any = await this.PaypalService.createPayment(obj);
+            if (result) {
+
+                for (let i = 0; i < result.links.length; i++) {
+                    if (result.links[i].rel === 'approval_url') {
+                        return { responseCode: 200, result: result.links[i].href }
+                    }
                 }
             }
+
+
         }
-        
-
+        catch (error) {
+            return error
+        }
     }
-    catch(error){
-        return error
+
+    //request to execute payment
+    @Post('/success')
+    async paypalPaymentSuccess(@Body() obj: Object) {
+        try {
+            const res = await this.PaypalService.executePayment(obj)
+            return res
+
+        }
+        catch (error) {
+            console.log("error in payment", error.message)
+            return error
+        }
     }
-}
 
-@Post('/success')
-  async paypalPaymentSuccess(@Body() obj:Object) {
-      console.log(obj,"firsssssst")
-    //   console.log(producTitle,productDescription,productPrice,"Firsttt")
-    try{
-        const res= await this.PaypalService.executePayment(obj)
-        console.log(res,"thirdd")
-        return res
-
+    //cancel paypal request
+    @Get('/cancel')
+    async cancelPayment() {
+        return { responseCode: 200 }
     }
-    catch(error){
-        console.log("error in payment",error.message)
-        return error
+
+    //get paypal suppoted currencies
+    @Get('/getCurrencies')
+    async getCurrency() {
+        console.log("firsssssst")
+        //   console.log(producTitle,productDescription,productPrice,"Firsttt")
+        try {
+            const res = await this.PaypalService.getListOfCurrencies();
+            return { responseCode: res[0], result: res[1] }
+
+        }
+        catch (error) {
+            return error
+        }
     }
-}
 
-@Get('/cancel')
-async cancelPayment(){
-    return {responseCode:200}
-}
 
-@Get('/getCurrencies')
-  async getCurrency() {
-      console.log("firsssssst")
-    //   console.log(producTitle,productDescription,productPrice,"Firsttt")
-    try{
-        const res= await this.PaypalService.getListOfCurrencies();
-        return {responseCode:res[0],result:res[1]}
-
-    }
-    catch(error){
-        return error
-    }
-}
-
-    
 }

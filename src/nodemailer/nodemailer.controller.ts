@@ -1,20 +1,22 @@
 import { Controller, Post, Body, Param} from '@nestjs/common';
 import { NodemailerService } from './nodemailer.service';
 
-@Controller('nodemailer')
+@Controller('sendMail')
 export class NodemailerController {
   constructor(private readonly nodemailerService: NodemailerService) {}
 
+  //request to send invoice mail
   @Post()
-  async sendMail() {
-    //   console.log(producTitle,productDescription,productPrice,"Firsttt")
+  async sendMail(
+      @Body() obj:Object
+  ) {
     try{
-        const res= await this.nodemailerService.mailToCustomMail();
-        return {result:res}
+        const res= await this.nodemailerService.mailToCustomMail(obj);
+        return {responseCode:res[0],result:res[1]}
 
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
