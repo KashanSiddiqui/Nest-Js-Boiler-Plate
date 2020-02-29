@@ -1,14 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 const axios = require('axios');
 const KrakenClient = require('kraken-api');
-const kraken = new KrakenClient('aHy3XTV0vIxt10AgaBeTtmRmTv3TwRm0IJqDPFqVFEgSlM1z7TTo9MsJ', 'kvkzBgWVzDl3XocRzjHcm64c4BSEH+L0nNXO1bkdJ1BH1QZkEX4BWWgXErU1YvFh40CyTo4nXx/SsJMMy0hVKA==');
+const kraken = new KrakenClient('', '');
 
 @Injectable()
 export class KrakenService {
     // products: Product[] = [];
 
     constructor(){}
-
+    J
+    
+    
+    
 //Function that return  amount of 1btc in the given currency symbol
     getTickerInformation = async (symbol) => {
         try {
@@ -16,8 +19,8 @@ export class KrakenService {
             // console.log(info.result['XXBTZUSD'].a[0], 'ask price')
             let url = `https://currency13.p.rapidapi.com/convert/${info.result['XXBTZUSD'].a[0]}/USD/${symbol}`
             let header = {
-                "x-rapidapi-host": "currency13.p.rapidapi.com",
-                "x-rapidapi-key": "aa522464damsh069405f3e3308e6p128bd9jsn13db25ed219c"
+                "x-rapidapi-host": "",
+                "x-rapidapi-key": ""
             }
             let result = await axios.get(url, {params: {}, headers: header}) //convert usd amount of 1btc to other currency
             const fiat= await this.getCurrencyRateOfAll(1,symbol)
@@ -34,8 +37,8 @@ export class KrakenService {
         try {
             let url = `https://currency13.p.rapidapi.com/convert/${amount}/CAD/${symbol}`
             let header = {
-                "x-rapidapi-host": "currency13.p.rapidapi.com",
-                "x-rapidapi-key": "aa522464damsh069405f3e3308e6p128bd9jsn13db25ed219c"
+                "x-rapidapi-host": "",
+                "x-rapidapi-key": ""
             }
             let result = await axios.get(url, {params: {}, headers: header})
             console.log(result.data, 'amount3')
@@ -55,8 +58,8 @@ export class KrakenService {
         try {
             let url = `https://currency13.p.rapidapi.com/convert/${amount}/${symbol}/CAD`
             let header = {
-                "x-rapidapi-host": "currency13.p.rapidapi.com",
-                "x-rapidapi-key": "aa522464damsh069405f3e3308e6p128bd9jsn13db25ed219c"
+                "x-rapidapi-host": "",
+                "x-rapidapi-key": ""
             }
             let result = await axios.get(url, {params: {}, headers: header})
             console.log(result.data, 'amount3')

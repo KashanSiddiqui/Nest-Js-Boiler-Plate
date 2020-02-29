@@ -8,14 +8,14 @@ const {promisify} = require('util');
 export class StripeService {
 
     constructor(){}
-
+    
     //get stripe supported currencies
     getListOfCurrencies = async () => {
         try {
             let url = "https://currency13.p.rapidapi.com/list"
             let header = {
-                "x-rapidapi-host": "currency13.p.rapidapi.com",
-                "x-rapidapi-key": "aa522464damsh069405f3e3308e6p128bd9jsn13db25ed219c"
+                "x-rapidapi-host": "",
+                "x-rapidapi-key": ""
             }
             const currencies = []
             let result = await axios.get(url, {params: {}, headers: header})
