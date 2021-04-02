@@ -1,7 +1,9 @@
-import { Controller, Post, Body, Param, Get } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, UseGuards } from '@nestjs/common';
+import { JWTAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import { PaypalService } from './paypal.service';
 
 @Controller('paypal')
+@UseGuards(new JWTAuthGuard())
 export class PaypalController {
     constructor(private readonly PaypalService: PaypalService) { }
 

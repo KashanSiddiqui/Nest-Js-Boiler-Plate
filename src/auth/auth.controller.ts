@@ -33,30 +33,31 @@ export class AuthController {
       return error
     }
 }
- //     @Get()
-//    async getAllProducts(){
-//         const product= await this.productService.getProducts();
-//         return product
-//     }
 
-//     @Get(':id')
-//     async getSingleProduct(@Param('id') productId:string){
-//         const product= await this.productService.getSingleProduct(productId);
-//         return product
-//     }
-//     @Patch(':id')
-//     async updateProduct(
-//     @Param('id') productId:string,
-//     @Body('title') producTitle:string,
-//     @Body('description') productDescription:string,
-//     @Body('price') productPrice:number,){
-//         const product=await this.productService.updateProduct(productId,producTitle,productDescription,productPrice);
-//         return product
-//         }
+@Post("/generateSecret")
+  async generate(@Body("email") email: string) {
+    try {
+      const res = this.authService.generateSecret(email);
+      if (res) {
+        return { status: 200, data: res };
+      }
+      return { status: 400, data: [] };
+    } catch (error) {
+      return error;
+    }
+  }
 
-//     @Delete(':id')
-//     async deleteProduct(@Param('id') prodId:string){
-//        const product= await this.productService.deleteProduct(prodId);
-//         return product
-//     }
+  @Post("/verify")
+  async verifyToken(@Body("email") email: string,@Body("token") token: string) {
+    try {
+      const res = await this.authService.verifyToken(email,token);
+      if (typeof res == "boolean" ) {
+        return { status: 200, data: res };
+      }
+      return { status: 400, data: [] };
+    } catch (error) {
+      return error;
+    }
+  }
+
 }

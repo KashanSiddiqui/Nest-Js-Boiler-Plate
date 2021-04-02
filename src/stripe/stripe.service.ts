@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-const stripe = require('stripe')('sk_test_9aHwbXgFNsmoySu5N23MHyi0000ldZDUKZ'); //will be replaced by my key afterward
+const dotenv = require('dotenv');
+dotenv.config();
+const stripe = require('stripe')(process.env.STRIPE_KEY); //will be replaced by my key afterward
 const axios = require('axios');
 const paypal = require('paypal-rest-sdk');
 const {promisify} = require('util');
@@ -8,14 +10,14 @@ const {promisify} = require('util');
 export class StripeService {
 
     constructor(){}
-    
+
     //get stripe supported currencies
     getListOfCurrencies = async () => {
         try {
             let url = "https://currency13.p.rapidapi.com/list"
             let header = {
-                "x-rapidapi-host": "",
-                "x-rapidapi-key": ""
+                "x-rapidapi-host": process.env.RAPID_API_HOST,
+                "x-rapidapi-key": process.env.RAPID_API_KEY
             }
             const currencies = []
             let result = await axios.get(url, {params: {}, headers: header})
@@ -91,10 +93,5 @@ createPayment = async (obj) => {
         throw [404, "Payment Failed",error.message];
     }
 }
-// const obj = {
-//        amount: "100", //this means 1 dollar
-//        currency: "USD",
-//        source: "tok_visa"
-//      }
 
 }

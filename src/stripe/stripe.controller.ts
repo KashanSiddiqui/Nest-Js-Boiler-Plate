@@ -1,8 +1,10 @@
-import { Controller, Post, Body, Param, Get} from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, UseGuards} from '@nestjs/common';
+import { JWTAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import { StripeService } from './stripe.service';
 
 //request execute payment
 @Controller('stripe')
+@UseGuards(new JWTAuthGuard())
 export class StripeController {
   constructor(private readonly StripeService: StripeService) {}
 

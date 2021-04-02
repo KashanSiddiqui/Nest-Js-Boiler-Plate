@@ -1,14 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 const paypal = require('paypal-rest-sdk');
 const {promisify} = require('util');
+const dotenv = require("dotenv");
 exports.create = promisify(paypal.payment.create);
-exports.execute = promisify(paypal.payment.execute)
+exports.execute = promisify(paypal.payment.execute);
+dotenv.config();
 
 //paypal configuration
 paypal.configure({
-    'mode': 'sandbox', //sandbox or live
-    'client_id': '',
-    'client_secret': ''
+    'mode': process.env.PAYPAL_MODE,//process.env.PAYPAL_MODE, //sandbox or live
+    'client_id': process.env.PAYPAL_CLIENT_ID,
+    'client_secret': process.env.PAYPAL_CLIENT_SECRET
 });
 
 @Injectable()

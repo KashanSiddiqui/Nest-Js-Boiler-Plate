@@ -1,23 +1,23 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 const nodemailer = require('nodemailer');
-
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 
 //nodemailer configuration
-
 let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
         type: 'OAuth2',
-        user: '',
-        clientId: '',
-        clientSecret: '',
-        refreshToken: '',
-        accessToken: '',
+        user: process.env.NODE_MAILER_USER,
+        clientId: process.env.NODE_CLIENT_ID,
+        clientSecret: process.env.NODE_CLIENT_SECRET,
+        refreshToken: process.env.NODE_MAILER_REFRESH_TOKEN,
+        accessToken: process.env.NODE_MAILER_ACCESS_TOKEN,
         expires: 3599
     }
 });
@@ -33,8 +33,8 @@ export class NodemailerService {
         try {
             
             let info = await transporter.sendMail({
-                from: '', // sender address
-                to: ""+`${invoiceData.payerEmail}`,//receiver email
+                from: 'no-reply@crypto.farm', // sender address
+                to: ","+`${invoiceData.payerEmail}`,//receiver email
                 subject: 'Receipt of Crypto Delivery Payment '+`${invoiceData.payerID}`, // Subject line
                 html: `
                 <h2>************Paid Invoice***************</h2> 
@@ -101,7 +101,7 @@ export class NodemailerService {
         try {
             
             let info = await transporter.sendMail({
-                from: '', // sender address
+                from: 'no-reply@crypto.farm', // sender address
                 to: "",//receiver email
                 subject: 'Receipt of Crypto Delivery Payment ' +`${invoiceData.payerID}`, // Subject line
                html: `

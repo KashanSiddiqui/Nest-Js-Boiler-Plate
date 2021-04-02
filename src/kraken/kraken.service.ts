@@ -1,17 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 const axios = require('axios');
 const KrakenClient = require('kraken-api');
-const kraken = new KrakenClient('', '');
+const dotenv = require('dotenv');
+dotenv.config();
+const kraken = new KrakenClient(process.env.KRAKEN_KEY, process.env.KRAKEN_SECRET);
 
 @Injectable()
 export class KrakenService {
     // products: Product[] = [];
 
     constructor(){}
-    J
-    
-    
-    
+
 //Function that return  amount of 1btc in the given currency symbol
     getTickerInformation = async (symbol) => {
         try {
@@ -19,8 +18,8 @@ export class KrakenService {
             // console.log(info.result['XXBTZUSD'].a[0], 'ask price')
             let url = `https://currency13.p.rapidapi.com/convert/${info.result['XXBTZUSD'].a[0]}/USD/${symbol}`
             let header = {
-                "x-rapidapi-host": "",
-                "x-rapidapi-key": ""
+                "x-rapidapi-host": process.env.RAPID_API_HOST,
+                "x-rapidapi-key": process.env.RAPID_API_KEY
             }
             let result = await axios.get(url, {params: {}, headers: header}) //convert usd amount of 1btc to other currency
             const fiat= await this.getCurrencyRateOfAll(1,symbol)
@@ -37,8 +36,8 @@ export class KrakenService {
         try {
             let url = `https://currency13.p.rapidapi.com/convert/${amount}/CAD/${symbol}`
             let header = {
-                "x-rapidapi-host": "",
-                "x-rapidapi-key": ""
+                "x-rapidapi-host": process.env.RAPID_API_HOST,
+                "x-rapidapi-key": process.env.RAPID_API_KEY
             }
             let result = await axios.get(url, {params: {}, headers: header})
             console.log(result.data, 'amount3')
@@ -58,8 +57,8 @@ export class KrakenService {
         try {
             let url = `https://currency13.p.rapidapi.com/convert/${amount}/${symbol}/CAD`
             let header = {
-                "x-rapidapi-host": "",
-                "x-rapidapi-key": ""
+                "x-rapidapi-host": process.env.RAPID_API_HOST,
+                "x-rapidapi-key": process.env.RAPID_API_KEY
             }
             let result = await axios.get(url, {params: {}, headers: header})
             console.log(result.data, 'amount3')

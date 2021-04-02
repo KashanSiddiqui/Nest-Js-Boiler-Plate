@@ -1,7 +1,9 @@
-import { Controller, Post, Body, Param} from '@nestjs/common';
+import { Controller, Post, Body, Param, UseGuards} from '@nestjs/common';
+import { JWTAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import { KrakenService } from './kraken.service';
 
 @Controller('kraken')
+@UseGuards(new JWTAuthGuard())
 export class KrakenController {
   constructor(private readonly KrakenService: KrakenService) {}
 

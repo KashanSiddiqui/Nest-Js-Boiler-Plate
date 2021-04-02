@@ -1,7 +1,9 @@
-import { Controller, Post, Body, Param} from '@nestjs/common';
+import { Controller, Post, Body, Param, UseGuards} from '@nestjs/common';
+import { JWTAuthGuard } from 'src/auth/jwt/jwt-auth.guard';
 import { NodemailerService } from './nodemailer.service';
 
 @Controller('sendMail')
+@UseGuards(new JWTAuthGuard())
 export class NodemailerController {
   constructor(private readonly nodemailerService: NodemailerService) {}
 
